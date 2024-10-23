@@ -4,7 +4,7 @@ const patientrouter = Router();
 const {PatientModel} = require('../db');
 const bcreypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const JWT = "jasghagjsh";
+
 
 patientrouter.post("/signup", async function (req, res){
     const {email , password, firstName, lastName, healthIssue} = req.body;
@@ -22,7 +22,10 @@ patientrouter.post("/signup", async function (req, res){
     })
      
 })
-
+patientrouter.get("/", async function (req, res){
+    const patients = await PatientModel.find().select('firstName lastName healthIssue');
+    res.json(patients)
+})
 
 patientrouter.post("/signin", async function (req, res) {
     const { email, password } = req.body;
